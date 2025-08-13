@@ -1,6 +1,6 @@
 {
   "name": "pear-crasher",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "index.js",
   "type": "commonjs",
   "description": "Pear uncaught crash handler",
