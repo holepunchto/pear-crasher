@@ -9,12 +9,15 @@ let hasLoggedUnhandledRejection = false
 let hasLoggedUncaughtException = false
 
 const start = Date.now()
-function logCrash (logPath, errorInfo, stackTrace, err) {
-  const timeStamp = (new Date()).toISOString()
+function logCrash(logPath, errorInfo, stackTrace, err) {
+  const timeStamp = new Date().toISOString()
   const uptime = (Date.now() - start) / 1000
   const driveInfo = `key=${CHECKOUT.key}\nlength=${CHECKOUT.length}\nfork=${CHECKOUT.fork}`
   const processInfo = `platform=${platform}\narch=${arch}\npid=${pid}\nuptime=${uptime}s`
-  const errInfo = err !== null && typeof err === 'object' ? JSON.stringify(err, 0, 4).slice(1, -2) : ''
+  const errInfo =
+    err !== null && typeof err === 'object'
+      ? JSON.stringify(err, 0, 4).slice(1, -2)
+      : ''
   const errorMsg = `${timeStamp} ${errorInfo}\n${driveInfo}\n${processInfo}\nstack=${stackTrace + errInfo}\n\n`
 
   console.error(errorMsg)
@@ -23,25 +26,32 @@ function logCrash (logPath, errorInfo, stackTrace, err) {
   console.error(`Error logged at ${logPath}`)
 }
 
-function printCrash (errorInfo, stackTrace, err) {
-  const errInfo = err !== null && typeof err === 'object' ? JSON.stringify(err, 0, 4).slice(1, -2) : ''
+function printCrash(errorInfo, stackTrace, err) {
+  const errInfo =
+    err !== null && typeof err === 'object'
+      ? JSON.stringify(err, 0, 4).slice(1, -2)
+      : ''
   const errorMsg = `${stackTrace + errInfo}\n\n${errorInfo}`
 
   console.error(errorMsg)
 }
 
-function logAndExit (enableLog, logPath, errorInfo, stack, err) {
+function logAndExit(enableLog, logPath, errorInfo, stack, err) {
   if (enableLog) {
     logCrash(logPath, errorInfo, stack, err)
   } else {
     printCrash(errorInfo, stack, err)
   }
 
-  const program = isBare ? global.Bare : (global.process.versions.electron ? require('electron').app : global.process)
+  const program = isBare
+    ? global.Bare
+    : global.process.versions.electron
+      ? require('electron').app
+      : global.process
   program.exit(1)
 }
 
-function setupCrashHandlers (processName, swap, enableLog) {
+function setupCrashHandlers(processName, swap, enableLog) {
   const crashlogPath = path.join(swap, `${processName}.crash.log`)
   const runContext = isBare ? global.Bare : global.process
 
