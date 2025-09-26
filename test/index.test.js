@@ -1,10 +1,10 @@
 'use strict'
-
+const run = require('pear-run')
+global.Pear = {}
 const { test } = require('brittle')
 const path = require('path')
 const fs = require('fs')
 const os = require('os')
-const run = require('pear-run')
 const Helper = require('./helper')
 
 const dirname = __dirname
