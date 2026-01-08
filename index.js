@@ -15,9 +15,7 @@ function logCrash(logPath, errorInfo, stackTrace, err) {
   const driveInfo = `key=${CHECKOUT.key}\nlength=${CHECKOUT.length}\nfork=${CHECKOUT.fork}`
   const processInfo = `platform=${platform}\narch=${arch}\npid=${pid}\nuptime=${uptime}s`
   const errInfo =
-    err !== null && typeof err === 'object'
-      ? JSON.stringify(err, 0, 4).slice(1, -2)
-      : ''
+    err !== null && typeof err === 'object' ? JSON.stringify(err, 0, 4).slice(1, -2) : ''
   const errorMsg = `${timeStamp} ${errorInfo}\n${driveInfo}\n${processInfo}\nstack=${stackTrace + errInfo}\n\n`
 
   console.error(errorMsg)
@@ -28,9 +26,7 @@ function logCrash(logPath, errorInfo, stackTrace, err) {
 
 function printCrash(errorInfo, stackTrace, err) {
   const errInfo =
-    err !== null && typeof err === 'object'
-      ? JSON.stringify(err, 0, 4).slice(1, -2)
-      : ''
+    err !== null && typeof err === 'object' ? JSON.stringify(err, 0, 4).slice(1, -2) : ''
   const errorMsg = `${stackTrace + errInfo}\n\n${errorInfo}`
 
   console.error(errorMsg)

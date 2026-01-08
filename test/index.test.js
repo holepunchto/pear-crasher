@@ -1,6 +1,7 @@
 'use strict'
-const run = require('pear-run')
+// Stub Pear early so pear-ref (pear-run) doesn't die on load
 global.Pear = {}
+const run = require('pear-run')
 const { test } = require('brittle')
 const path = require('path')
 const fs = require('fs')
@@ -12,7 +13,7 @@ const dirname = __dirname
 test('crasher uncaught exception', async function (t) {
   t.plan(2)
 
-  const dir = path.join(dirname, 'fixtures', 'crasher-uncaught-exception')
+  const dir = path.join(dirname, 'fixtures', 'crasher-uncaught-exception', 'index.js')
 
   const teardown = Helper.rig()
   t.teardown(teardown)
@@ -37,16 +38,13 @@ test('crasher uncaught exception', async function (t) {
     return logContent.includes('Test uncaught exception')
   })
   const logContent = await fs.promises.readFile(crashlogPath, 'utf8')
-  t.ok(
-    logContent.includes('Test uncaught exception'),
-    'Log should contain the error message'
-  )
+  t.ok(logContent.includes('Test uncaught exception'), 'Log should contain the error message')
 })
 
 test('crasher unhandled rejection', async function (t) {
   t.plan(2)
 
-  const dir = path.join(dirname, 'fixtures', 'crasher-unhandled-rejection')
+  const dir = path.join(dirname, 'fixtures', 'crasher-unhandled-rejection', 'index.js')
 
   const teardown = Helper.rig()
   t.teardown(teardown)
@@ -71,8 +69,5 @@ test('crasher unhandled rejection', async function (t) {
     return logContent.includes('Test unhandled rejection')
   })
   const logContent = await fs.promises.readFile(crashlogPath, 'utf8')
-  t.ok(
-    logContent.includes('Test unhandled rejection'),
-    'Log should contain the error message'
-  )
+  t.ok(logContent.includes('Test unhandled rejection'), 'Log should contain the error message')
 })
