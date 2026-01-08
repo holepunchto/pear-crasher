@@ -1,4 +1,5 @@
 'use strict'
+// Stub Pear early so pear-ref (pear-run) doesn't die on load
 global.Pear = {}
 const run = require('pear-run')
 const { test } = require('brittle')
