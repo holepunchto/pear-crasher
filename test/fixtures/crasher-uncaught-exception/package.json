@@ -1,0 +1,9 @@
+{
+  "name": "crasher-uncaught-exception",
+  "main": "index.js",
+  "imports": {
+    "process": {
+      "bare": "bare-process"
+    }
+  }
+}
