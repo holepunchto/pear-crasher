@@ -1,6 +1,6 @@
 'use strict'
-const run = require('pear-run')
 global.Pear = {}
+const run = require('pear-run')
 const { test } = require('brittle')
 const path = require('path')
 const fs = require('fs')
