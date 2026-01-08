@@ -24,8 +24,7 @@
     "format": "prettier --write .",
     "lint": "prettier --check . && lunte",
     "test:gen": "brittle -r test/all.js test/*.test.js",
-    "test": "npm run test:node && npm run test:bare",
-    "test:node": "brittle-node --coverage test/all.js",
+    "test": "npm run test:bare",
     "test:bare": "brittle-bare --coverage test/all.js"
   },
   "devDependencies": {
