@@ -38,10 +38,7 @@ test('crasher uncaught exception', async function (t) {
     return logContent.includes('Test uncaught exception')
   })
   const logContent = await fs.promises.readFile(crashlogPath, 'utf8')
-  t.ok(
-    logContent.includes('Test uncaught exception'),
-    'Log should contain the error message'
-  )
+  t.ok(logContent.includes('Test uncaught exception'), 'Log should contain the error message')
 })
 
 test('crasher unhandled rejection', async function (t) {
@@ -72,8 +69,5 @@ test('crasher unhandled rejection', async function (t) {
     return logContent.includes('Test unhandled rejection')
   })
   const logContent = await fs.promises.readFile(crashlogPath, 'utf8')
-  t.ok(
-    logContent.includes('Test unhandled rejection'),
-    'Log should contain the error message'
-  )
+  t.ok(logContent.includes('Test unhandled rejection'), 'Log should contain the error message')
 })
