@@ -1,9 +1,0 @@
-{
-  "name": "crasher-unhandled-rejection",
-  "main": "index.js",
-  "imports": {
-    "process": {
-      "bare": "bare-process"
-    }
-  }
-}

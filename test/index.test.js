@@ -13,7 +13,7 @@ const dirname = __dirname
 test('crasher uncaught exception', async function (t) {
   t.plan(2)
 
-  const dir = path.join(dirname, 'fixtures', 'crasher-uncaught-exception')
+  const dir = path.join(dirname, 'fixtures', 'crasher-uncaught-exception', 'index.js')
 
   const teardown = Helper.rig()
   t.teardown(teardown)
@@ -47,7 +47,7 @@ test('crasher uncaught exception', async function (t) {
 test('crasher unhandled rejection', async function (t) {
   t.plan(2)
 
-  const dir = path.join(dirname, 'fixtures', 'crasher-unhandled-rejection')
+  const dir = path.join(dirname, 'fixtures', 'crasher-unhandled-rejection', 'index.js')
 
   const teardown = Helper.rig()
   t.teardown(teardown)
