@@ -39,11 +39,7 @@ function logAndExit(enableLog, logPath, errorInfo, stack, err) {
     printCrash(errorInfo, stack, err)
   }
 
-  const program = isBare
-    ? global.Bare
-    : global.process.versions.electron
-      ? require('electron').app
-      : global.process
+  const program = isBare ? global.Bare : global.process
   program.exit(1)
 }
 
