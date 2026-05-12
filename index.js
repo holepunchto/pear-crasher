@@ -39,8 +39,7 @@ function logAndExit(enableLog, logPath, errorInfo, stack, err) {
     printCrash(errorInfo, stack, err)
   }
 
-  const program = global.Bare
-  program.exit(1)
+  global.Bare.exit(1)
 }
 
 function setupCrashHandlers(processName, swap, enableLog) {

@@ -2,8 +2,7 @@ const Helper = require('./helper')
 const { command } = require('paparam')
 const pear = require('pear-cmd')
 const rundef = require('pear-cmd/run')
-const program = global.Bare ?? global.process
-const cmd = pear(program.argv.slice(2))
+const cmd = pear(global.Bare.argv.slice(2))
 if (cmd.args.cmd !== 'run') {
   throw Error('NOT A RUN COMMAND, MUST BE A RUN COMMAND')
 }

@@ -1,7 +1,7 @@
 'use strict'
 global.Pear = null
 
-const { isWindows, isBare } = require('which-runtime')
+const { isWindows } = require('which-runtime')
 const IPC = require('pear-ipc')
 const path = require('path')
 const fs = require('fs')
@@ -41,7 +41,7 @@ class Helper {
       app = state.config
     }
 
-    const program = global.Bare ?? global.process
+    const program = global.Bare
     const argv = [...program.argv]
     program.argv.length = 0
     program.argv.push('pear', 'run', ...argv.slice(1))
@@ -49,11 +49,7 @@ class Helper {
 
     return () => {
       if (clearRequireCache) {
-        delete require.cache[
-          isBare
-            ? pathToFileURL(require.resolve(clearRequireCache))
-            : require.resolve(clearRequireCache)
-        ]
+        delete require.cache[pathToFileURL(require.resolve(clearRequireCache))]
       }
       program.argv.length = 0
       program.argv.push(...argv)
@@ -164,9 +160,7 @@ class Helper {
   }
 
   static override(moduleName, override) {
-    const modulePath = isBare
-      ? pathToFileURL(require.resolve(moduleName))
-      : require.resolve(moduleName)
+    const modulePath = pathToFileURL(require.resolve(moduleName))
     if (BUILTINS.has(moduleName)) {
       require.cache[modulePath] = {
         exports: typeof override === 'function' ? override : { ...require(moduleName), ...override }
@@ -188,9 +182,7 @@ class Helper {
   }
 
   static forget(moduleName) {
-    const modulePath = isBare
-      ? pathToFileURL(require.resolve(moduleName))
-      : require.resolve(moduleName)
+    const modulePath = pathToFileURL(require.resolve(moduleName))
     if (require.cache[modulePath]) delete require.cache[modulePath]
   }
 }
