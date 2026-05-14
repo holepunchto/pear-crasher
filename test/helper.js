@@ -6,6 +6,7 @@ const IPC = require('pear-ipc')
 const path = require('bare-path')
 const fs = require('bare-fs')
 const { pathToFileURL } = require('url-file-url')
+const process = require('bare-process')
 
 const dirname = __dirname
 const socketPath = isWindows ? '\\\\.\\pipe\\pear-api-test-ipc' : 'test.sock'
@@ -34,7 +35,7 @@ class Helper {
     global.Pear = new RigAPI()
 
     class TestAPI {
-      static RUNTIME = global.Bare.argv[0]
+      static RUNTIME = process.argv[0]
       static RUNTIME_ARGV = runtimeArgv ?? [path.join(dirname, 'run.js')]
       static RTI = RigAPI.RTI
       app = state.config
@@ -107,7 +108,7 @@ class Helper {
   static async isRunning(pid) {
     try {
       // 0 is a signal that doesn't kill the process, just checks if it's running
-      return global.Bare.kill(pid, 0)
+      return process.kill(pid, 0)
     } catch (err) {
       return err.code === 'EPERM'
     }
