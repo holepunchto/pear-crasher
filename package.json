@@ -6,23 +6,6 @@
   "description": "Pear uncaught crash handler",
   "license": "Apache-2.0",
   "files": [],
-  "imports": {
-    "fs": {
-      "bare": "bare-fs"
-    },
-    "module": {
-      "bare": "bare-module"
-    },
-    "os": {
-      "bare": "bare-os"
-    },
-    "path": {
-      "bare": "bare-path"
-    },
-    "process": {
-      "bare": "bare-process"
-    }
-  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "prettier --check . && lunte",
@@ -31,7 +14,7 @@
   },
   "devDependencies": {
     "bare-module": "^5.0.2",
-    "bare-process": "^4.2.2",
+    "bare-process": "^4.4.1",
     "brittle": "^3.0.0",
     "lunte": "^1.4.0",
     "paparam": "^1.8.5",
@@ -44,6 +27,8 @@
     "url-file-url": "^1.0.5"
   },
   "dependencies": {
+    "bare-os": "^3.9.1",
+    "bare-path": "^3.0.0",
     "pear-rti": "^1.0.1"
   }
 }

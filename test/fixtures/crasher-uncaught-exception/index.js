@@ -1,4 +1,4 @@
-const process = require('process')
+const process = require('bare-process')
 const [swap] = global.Pear.app.args
 
 const setupCrashHandlers = require('../../..')

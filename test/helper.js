@@ -3,15 +3,14 @@ global.Pear = null
 
 const { isWindows } = require('which-runtime')
 const IPC = require('pear-ipc')
-const path = require('path')
-const fs = require('fs')
+const path = require('bare-path')
+const fs = require('bare-fs')
 const { pathToFileURL } = require('url-file-url')
-const process = require('process')
 
 const dirname = __dirname
 const socketPath = isWindows ? '\\\\.\\pipe\\pear-api-test-ipc' : 'test.sock'
 const STOP_CHAR = '\n'
-const BUILTINS = new Set(require('module').builtinModules)
+const BUILTINS = new Set(require('bare-module').builtinModules)
 
 const noop = () => {}
 
@@ -35,24 +34,23 @@ class Helper {
     global.Pear = new RigAPI()
 
     class TestAPI {
-      static RUNTIME = process.argv[0]
+      static RUNTIME = global.Bare.argv[0]
       static RUNTIME_ARGV = runtimeArgv ?? [path.join(dirname, 'run.js')]
       static RTI = RigAPI.RTI
       app = state.config
     }
 
-    const program = global.Bare
-    const argv = [...program.argv]
-    program.argv.length = 0
-    program.argv.push('pear', 'run', ...argv.slice(1))
+    const argv = [...global.Bare.argv]
+    global.Bare.argv.length = 0
+    global.Bare.argv.push('pear', 'run', ...argv.slice(1))
     global.Pear = new TestAPI(ipc, state)
 
     return () => {
       if (clearRequireCache) {
         delete require.cache[pathToFileURL(require.resolve(clearRequireCache))]
       }
-      program.argv.length = 0
-      program.argv.push(...argv)
+      global.Bare.argv.length = 0
+      global.Bare.argv.push(...argv)
       global.Pear = null
     }
   }
@@ -109,7 +107,7 @@ class Helper {
   static async isRunning(pid) {
     try {
       // 0 is a signal that doesn't kill the process, just checks if it's running
-      return process.kill(pid, 0)
+      return global.Bare.kill(pid, 0)
     } catch (err) {
       return err.code === 'EPERM'
     }

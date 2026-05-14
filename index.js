@@ -1,7 +1,7 @@
 'use strict'
 const { platform, arch } = require('which-runtime')
-const fs = require('fs')
-const path = require('path')
+const fs = require('bare-fs')
+const path = require('bare-path')
 const { CHECKOUT } = require('pear-rti')
 const pid = global.Bare.pid
 
