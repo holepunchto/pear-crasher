@@ -3,9 +3,9 @@
 global.Pear = {}
 const run = require('pear-run')
 const { test } = require('brittle')
-const path = require('path')
-const fs = require('fs')
-const os = require('os')
+const path = require('bare-path')
+const fs = require('bare-fs')
+const os = require('bare-os')
 const Helper = require('./helper')
 
 const dirname = __dirname

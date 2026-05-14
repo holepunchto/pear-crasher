@@ -1,17 +1,17 @@
 'use strict'
 global.Pear = null
 
-const { isWindows, isBare } = require('which-runtime')
+const { isWindows } = require('which-runtime')
 const IPC = require('pear-ipc')
-const path = require('path')
-const fs = require('fs')
+const path = require('bare-path')
+const fs = require('bare-fs')
 const { pathToFileURL } = require('url-file-url')
-const process = require('process')
+const process = require('bare-process')
 
 const dirname = __dirname
 const socketPath = isWindows ? '\\\\.\\pipe\\pear-api-test-ipc' : 'test.sock'
 const STOP_CHAR = '\n'
-const BUILTINS = new Set(require('module').builtinModules)
+const BUILTINS = new Set(require('bare-module').builtinModules)
 
 const noop = () => {}
 
@@ -41,22 +41,17 @@ class Helper {
       app = state.config
     }
 
-    const program = global.Bare ?? global.process
-    const argv = [...program.argv]
-    program.argv.length = 0
-    program.argv.push('pear', 'run', ...argv.slice(1))
+    const argv = [...global.Bare.argv]
+    global.Bare.argv.length = 0
+    global.Bare.argv.push('pear', 'run', ...argv.slice(1))
     global.Pear = new TestAPI(ipc, state)
 
     return () => {
       if (clearRequireCache) {
-        delete require.cache[
-          isBare
-            ? pathToFileURL(require.resolve(clearRequireCache))
-            : require.resolve(clearRequireCache)
-        ]
+        delete require.cache[pathToFileURL(require.resolve(clearRequireCache))]
       }
-      program.argv.length = 0
-      program.argv.push(...argv)
+      global.Bare.argv.length = 0
+      global.Bare.argv.push(...argv)
       global.Pear = null
     }
   }
@@ -164,9 +159,7 @@ class Helper {
   }
 
   static override(moduleName, override) {
-    const modulePath = isBare
-      ? pathToFileURL(require.resolve(moduleName))
-      : require.resolve(moduleName)
+    const modulePath = pathToFileURL(require.resolve(moduleName))
     if (BUILTINS.has(moduleName)) {
       require.cache[modulePath] = {
         exports: typeof override === 'function' ? override : { ...require(moduleName), ...override }
@@ -188,9 +181,7 @@ class Helper {
   }
 
   static forget(moduleName) {
-    const modulePath = isBare
-      ? pathToFileURL(require.resolve(moduleName))
-      : require.resolve(moduleName)
+    const modulePath = pathToFileURL(require.resolve(moduleName))
     if (require.cache[modulePath]) delete require.cache[modulePath]
   }
 }

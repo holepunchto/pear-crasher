@@ -1,9 +1,9 @@
 'use strict'
-const { isBare, platform, arch } = require('which-runtime')
-const fs = require('fs')
-const path = require('path')
+const { platform, arch } = require('which-runtime')
+const fs = require('bare-fs')
+const path = require('bare-path')
 const { CHECKOUT } = require('pear-rti')
-const pid = isBare ? global.Bare.pid : process.pid
+const pid = global.Bare.pid
 
 let hasLoggedUnhandledRejection = false
 let hasLoggedUncaughtException = false
@@ -39,17 +39,12 @@ function logAndExit(enableLog, logPath, errorInfo, stack, err) {
     printCrash(errorInfo, stack, err)
   }
 
-  const program = isBare
-    ? global.Bare
-    : global.process.versions.electron
-      ? require('electron').app
-      : global.process
-  program.exit(1)
+  global.Bare.exit(1)
 }
 
 function setupCrashHandlers(processName, swap, enableLog) {
   const crashlogPath = path.join(swap, `${processName}.crash.log`)
-  const runContext = isBare ? global.Bare : global.process
+  const runContext = global.Bare
 
   runContext.on('unhandledRejection', (reason) => {
     if (hasLoggedUnhandledRejection) return
